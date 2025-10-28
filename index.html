@@ -55,6 +55,51 @@
             100% { transform: rotate(360deg); }
         }
         
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero-title-animated {
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        .hero-subtitle-animated {
+            animation: slideInLeft 1.2s ease-out 0.3s both;
+        }
+        
+        .hero-buttons-animated {
+            animation: slideInRight 1.2s ease-out 0.6s both;
+        }
+        
         .toast {
             position: fixed;
             top: 20px;
@@ -97,9 +142,9 @@
   </nav><!-- Hero Section -->
   <section class="hero-bg min-h-screen flex items-center justify-center text-white relative">
    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-    <h1 id="hero-title" class="font-merriweather font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">Tất cả vì hòa bình<br><span class="text-yellow-300">All for Peace</span></h1>
-    <p id="hero-subtitle" class="text-xl md:text-2xl mb-8 font-light leading-relaxed" style="color: #D2B48C;">Trải nghiệm chân thực khó khăn thời chiến để thấu hiểu giá trị hòa bình</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><button onclick="scrollToBooking()" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"> Đặt vé trải nghiệm </button> <button onclick="scrollToExperiences()" class="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-lg transition-all"> Xem lịch &amp; giá </button> <button onclick="scrollToBooking()" class="px-8 py-4 bg-yellow-700 hover:bg-yellow-800 text-white font-semibold rounded-lg transition-all"> Dành cho trường học </button>
+    <h1 id="hero-title" class="font-merriweather font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight hero-title-animated">Tất cả vì hòa bình<br><span class="text-yellow-300">All for Peace</span></h1>
+    <p id="hero-subtitle" class="text-xl md:text-2xl mb-8 font-light leading-relaxed hero-subtitle-animated" style="color: #D2B48C;">Trải nghiệm chân thực khó khăn thời chiến để thấu hiểu giá trị hòa bình</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center hero-buttons-animated"><button onclick="scrollToBooking()" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"> Đặt vé trải nghiệm </button> <button onclick="scrollToExperiences()" class="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-lg transition-all"> Xem lịch &amp; giá </button> <button onclick="scrollToBooking()" class="px-8 py-4 bg-yellow-700 hover:bg-yellow-800 text-white font-semibold rounded-lg transition-all"> Dành cho trường học </button>
     </div>
    </div>
   </section><!-- Mission Section -->
@@ -281,6 +326,9 @@
       <div><label for="adults" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Số người lớn</label> <input type="number" id="adults" name="adults" min="0" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
       <div><label for="students" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Số học sinh</label> <input type="number" id="students" name="students" min="0" value="0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div class="md:col-span-2"><label for="notificationEmail" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Email nhận thông báo</label> <input type="email" id="notificationEmail" name="notificationEmail" placeholder="admin@allforpeace.vn" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+       <p class="text-xs text-gray-500 mt-1">Email sẽ nhận thông báo khi có đăng ký mới (tùy chọn)</p>
       </div>
      </div>
      <div class="mt-6"><label for="specialRequirements" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Yêu cầu đặc biệt</label> <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Chế độ ăn, hỗ trợ y tế, ngôn ngữ hướng dẫn..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"></textarea>
@@ -596,6 +644,7 @@
                     students: parseInt(formData.get('students')) || 0,
                     teachers: 0, // Default value
                     special_requirements: formData.get('specialRequirements') || '',
+                    notification_email: formData.get('notificationEmail') || '',
                     age_confirmed: formData.get('ageConfirmed') === 'on',
                     health_declared: formData.get('healthDeclared') === 'on',
                     safety_agreed: formData.get('safetyAgreed') === 'on',
@@ -629,5 +678,5 @@
         // Initialize app when DOM is ready
         document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9957a6068078855e',t:'MTc2MTYyNTMwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99582503c2eb855e',t:'MTc2MTYzMDUxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
