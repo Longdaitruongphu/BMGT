@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="vi">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All for Peace - Trải nghiệm hòa bình qua lịch sử</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.9), rgba(139, 90, 43, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background-size: cover, 200px 200px;
+        }
+        
+        .film-grain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23000000" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23000000" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="%23000000" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+        
+        .military-border {
+            border: 3px solid #556B2F;
+            border-image: repeating-linear-gradient(45deg, #556B2F 0, #556B2F 10px, #8B5A2B 10px, #8B5A2B 20px) 3;
+        }
+        
+        .vintage-paper {
+            background: linear-gradient(45deg, #D2B48C 0%, #F5DEB3 100%);
+            box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.1);
+        }
+        
+        .loading-spinner {
+            border: 3px solid #D2B48C;
+            border-top: 3px solid #556B2F;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background-color: #556B2F;
+        }
+        
+        .toast.error {
+            background-color: #B22222;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="font-inter text-gray-900"><!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+     <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center"><span class="text-white font-bold text-sm">✌</span>
+      </div><span class="font-merriweather font-bold text-xl" style="color: #556B2F;">All for Peace</span>
+     </div>
+     <div class="hidden md:flex space-x-8"><a href="#about" class="text-gray-700 hover:text-yellow-700 transition-colors">Về chúng tôi</a> <a href="#experiences" class="text-gray-700 hover:text-yellow-700 transition-colors">Trải nghiệm</a> <a href="#safety" class="text-gray-700 hover:text-yellow-700 transition-colors">An toàn</a> <a href="#booking" class="text-gray-700 hover:text-yellow-700 transition-colors">Đặt vé</a>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section class="hero-bg min-h-screen flex items-center justify-center text-white relative">
+   <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+    <h1 id="hero-title" class="font-merriweather font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">Tất cả vì hòa bình<br><span class="text-yellow-300">All for Peace</span></h1>
+    <p id="hero-subtitle" class="text-xl md:text-2xl mb-8 font-light leading-relaxed" style="color: #D2B48C;">Trải nghiệm chân thực khó khăn thời chiến để thấu hiểu giá trị hòa bình</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><button onclick="scrollToBooking()" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"> Đặt vé trải nghiệm </button> <button onclick="scrollToExperiences()" class="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-lg transition-all"> Xem lịch &amp; giá </button> <button onclick="scrollToBooking()" class="px-8 py-4 bg-yellow-700 hover:bg-yellow-800 text-white font-semibold rounded-lg transition-all"> Dành cho trường học </button>
+    </div>
+   </div>
+  </section><!-- Mission Section -->
+  <section id="about" class="py-20 vintage-paper relative film-grain">
+   <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+    <h2 id="mission-title" class="font-merriweather font-bold text-3xl md:text-4xl mb-8" style="color: #556B2F;">Vì sao chúng tôi làm điều này?</h2>
+    <p id="mission-text" class="text-lg md:text-xl leading-relaxed text-gray-800 max-w-3xl mx-auto">Chúng tôi tái hiện có kiểm soát để giáo dục lịch sử, khơi gợi lòng biết ơn, xây dựng tinh thần đồng đội, và tôn vinh hòa bình.</p>
+   </div>
+  </section><!-- Experience Packages -->
+  <section id="experiences" class="py-20 bg-gray-50">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-16" style="color: #556B2F;">Gói trải nghiệm</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- EASY Package -->
+     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow">
+      <div class="text-center mb-4">
+       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">EASY</h3>
+       <p class="text-sm font-mono text-gray-600">(Giáo dục)</p>
+       <p class="text-lg font-semibold" style="color: #556B2F;">3-4 giờ</p>
+       <p class="text-sm text-gray-600">Học sinh - sinh viên</p>
+      </div>
+      <ul class="text-sm space-y-2 mb-6">
+       <li>• Tham quan chiến trường mô phỏng</li>
+       <li>• Mặc quân phục lịch sử</li>
+       <li>• Nấu ăn bếp Hoàng Cầm</li>
+       <li>• Xem trình diễn chiến thuật</li>
+      </ul><button onclick="selectPackage('EASY')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Chọn gói này </button>
+     </div><!-- NORMAL Package -->
+     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow">
+      <div class="text-center mb-4">
+       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">NORMAL</h3>
+       <p class="text-sm font-mono text-gray-600">(Dân công hỏa tuyến)</p>
+       <p class="text-lg font-semibold" style="color: #556B2F;">4-6 giờ</p>
+       <p class="text-sm text-gray-600">18+</p>
+      </div>
+      <ul class="text-sm space-y-2 mb-6">
+       <li>• Vận chuyển lương thực</li>
+       <li>• Nhiệm vụ hậu tuyến</li>
+       <li>• Tình huống né phục kích</li>
+       <li>• Nấu ăn thời chiến</li>
+      </ul><button onclick="selectPackage('NORMAL')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Chọn gói này </button>
+     </div><!-- HARD Package -->
+     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow relative">
+      <div class="absolute -top-3 -right-3 bg-red-700 text-white px-3 py-1 rounded-full text-xs font-bold">
+       PHỔ BIẾN
+      </div>
+      <div class="text-center mb-4">
+       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">HARD</h3>
+       <p class="text-sm font-mono text-gray-600">(Mô phỏng lính chiến)</p>
+       <p class="text-lg font-semibold" style="color: #556B2F;">6-8 giờ</p>
+       <p class="text-sm text-gray-600">18+</p>
+      </div>
+      <ul class="text-sm space-y-2 mb-6">
+       <li>• Combat bằng laser an toàn</li>
+       <li>• Chiến thuật đội nhóm</li>
+       <li>• Cứu thương mô phỏng</li>
+       <li>• Hiệu ứng âm thanh &amp; khói</li>
+      </ul><button onclick="selectPackage('HARD')" class="w-full py-2 bg-red-700 hover:bg-red-800 text-white rounded transition-colors"> Chọn gói này </button>
+     </div><!-- 3 Days Package -->
+     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow">
+      <div class="text-center mb-4">
+       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">PREMIUM</h3>
+       <p class="text-sm font-mono text-gray-600">3 ngày 2 đêm</p>
+       <p class="text-lg font-semibold" style="color: #556B2F;">Toàn diện</p>
+       <p class="text-sm text-gray-600">18+</p>
+      </div>
+      <ul class="text-sm space-y-2 mb-6">
+       <li>• Sống như cựu chiến binh</li>
+       <li>• Học lịch sử &amp; kỷ luật</li>
+       <li>• Nhiệm vụ ngày &amp; đêm</li>
+       <li>• Đêm kể chuyện lịch sử</li>
+      </ul><button onclick="selectPackage('3N2D')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Chọn gói này </button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Sample Schedule -->
+  <section class="py-20 vintage-paper">
+   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12" style="color: #556B2F;">Lịch trình mẫu (HARD - 1 ngày)</h2>
+    <div class="space-y-6">
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       08:30
+      </div>
+      <div>
+       <h4 class="font-semibold">Check-in &amp; phát trang bị</h4>
+       <p class="text-gray-600 text-sm">Nhận đồng phục, thiết bị laser, briefing an toàn</p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       09:00
+      </div>
+      <div>
+       <h4 class="font-semibold">Briefing an toàn &amp; chiến thuật</h4>
+       <p class="text-gray-600 text-sm">Hướng dẫn sử dụng thiết bị, quy tắc an toàn</p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       10:00
+      </div>
+      <div>
+       <h4 class="font-semibold">Nhiệm vụ 1: Trinh sát - chiếm điểm</h4>
+       <p class="text-gray-600 text-sm">Mô phỏng nhiệm vụ trinh sát và chiếm giữ cứ điểm</p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       12:00
+      </div>
+      <div>
+       <h4 class="font-semibold">Nghỉ trưa: bếp Hoàng Cầm</h4>
+       <p class="text-gray-600 text-sm">Thưởng thức món ăn thời chiến truyền thống</p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       13:30
+      </div>
+      <div>
+       <h4 class="font-semibold">Nhiệm vụ 2: Giải cứu - vận chuyển</h4>
+       <p class="text-gray-600 text-sm">Nhiệm vụ cứu thương và vận chuyển an toàn</p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+       15:30
+      </div>
+      <div>
+       <h4 class="font-semibold">Debrief &amp; trao huy hiệu "All for Peace"</h4>
+       <p class="text-gray-600 text-sm">Tổng kết, chia sẻ cảm nhận và nhận huy hiệu kỷ niệm</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Safety Section -->
+  <section id="safety" class="py-20 bg-gray-50">
+   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12" style="color: #556B2F;">An toàn &amp; trách nhiệm</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+     <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+      <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center"><span class="text-2xl">🔫</span>
+      </div>
+      <h3 class="font-semibold mb-2">Laser mô phỏng</h3>
+      <p class="text-gray-600 text-sm">Không đạn vật lý, hoàn toàn an toàn với công nghệ laser</p>
+     </div>
+     <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+      <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center"><span class="text-2xl">🏥</span>
+      </div>
+      <h3 class="font-semibold mb-2">Y tế onsite</h3>
+      <p class="text-gray-600 text-sm">Đội ngũ y tế, vùng an toàn, tín hiệu dừng khẩn cấp</p>
+     </div>
+     <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+      <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center"><span class="text-2xl">⚖️</span>
+      </div>
+      <h3 class="font-semibold mb-2">Tuân thủ pháp lý</h3>
+      <p class="text-gray-600 text-sm">Không khuyến khích bạo lực, tôn vinh giá trị hòa bình</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Booking Form -->
+  <section id="booking" class="py-20 vintage-paper">
+   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12" style="color: #556B2F;">Đặt vé trải nghiệm</h2>
+    <form id="bookingForm" class="bg-white rounded-lg shadow-lg p-8 military-border">
+     <div class="grid md:grid-cols-2 gap-6"><!-- Contact Info -->
+      <div><label for="name" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Họ và tên *</label> <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div><label for="email" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Email *</label> <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div><label for="phone" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Số điện thoại *</label> <input type="tel" id="phone" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div><label for="groupType" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Nhóm đối tượng *</label> <select id="groupType" name="groupType" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Chọn nhóm đối tượng</option> <option value="individual">Cá nhân</option> <option value="school">Trường học</option> <option value="corporate">Doanh nghiệp</option> </select>
+      </div>
+      <div><label for="package" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Gói trải nghiệm *</label> <select id="package" name="package" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Chọn gói trải nghiệm</option> <option value="EASY">EASY (Giáo dục) - 3-4h</option> <option value="NORMAL">NORMAL (Dân công hỏa tuyến) - 4-6h</option> <option value="HARD">HARD (Mô phỏng lính chiến) - 6-8h</option> <option value="3N2D">PREMIUM (3 ngày 2 đêm)</option> </select>
+      </div>
+      <div><label for="date" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Ngày mong muốn *</label> <input type="date" id="date" name="date" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div><label for="adults" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Số người lớn</label> <input type="number" id="adults" name="adults" min="0" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+      <div><label for="students" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Số học sinh</label> <input type="number" id="students" name="students" min="0" value="0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+      </div>
+     </div>
+     <div class="mt-6"><label for="specialRequirements" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Yêu cầu đặc biệt</label> <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Chế độ ăn, hỗ trợ y tế, ngôn ngữ hướng dẫn..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"></textarea>
+     </div>
+     <div class="mt-6 space-y-4"><label class="flex items-start space-x-3"> <input type="checkbox" id="ageConfirmed" name="ageConfirmed" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">Tôi xác nhận đủ độ tuổi tham gia (18+ cho NORMAL/HARD/PREMIUM) *</span> </label> <label class="flex items-start space-x-3"> <input type="checkbox" id="healthDeclared" name="healthDeclared" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">Tôi khai báo sức khỏe tốt, không có vấn đề tim mạch hoặc hô hấp *</span> </label> <label class="flex items-start space-x-3"> <input type="checkbox" id="safetyAgreed" name="safetyAgreed" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">Tôi đã đọc và đồng ý với các quy định an toàn *</span> </label>
+     </div>
+     <div class="mt-8 text-center"><button type="submit" id="submitBtn" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"> <span id="submitText">Gửi đăng ký</span>
+       <div id="submitSpinner" class="loading-spinner mx-auto hidden"></div></button>
+      <p class="text-sm text-gray-600 mt-4">Chúng tôi sẽ liên hệ trong vòng 24h để xác nhận và hướng dẫn thanh toán</p>
+     </div>
+    </form>
+   </div>
+  </section><!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-4 gap-8">
+     <div>
+      <div class="flex items-center space-x-2 mb-4">
+       <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center"><span class="text-white font-bold text-sm">✌</span>
+       </div><span class="font-merriweather font-bold text-xl">All for Peace</span>
+      </div>
+      <p class="text-gray-400 text-sm">Trải nghiệm lịch sử để hiểu giá trị hòa bình</p>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-4">Liên hệ</h4>
+      <div class="space-y-2 text-sm text-gray-400">
+       <p id="contact-email">Email: info@allforpeace.vn</p>
+       <p id="contact-phone">Hotline: +84 xxx xxx xxx</p>
+       <p>Địa chỉ: Hà Nội, Việt Nam</p>
+      </div>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-4">Trải nghiệm</h4>
+      <div class="space-y-2 text-sm text-gray-400">
+       <p>EASY - Giáo dục</p>
+       <p>NORMAL - Dân công</p>
+       <p>HARD - Lính chiến</p>
+       <p>PREMIUM - 3N2Đ</p>
+      </div>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-4">Chính sách</h4>
+      <div class="space-y-2 text-sm text-gray-400">
+       <p>Điều khoản sử dụng</p>
+       <p>Chính sách bảo mật</p>
+       <p>Chính sách hoàn tiền</p>
+       <p>Quy định an toàn</p>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+     <p>© 2024 All for Peace. Tất cả quyền được bảo lưu.</p>
+    </div>
+   </div>
+  </footer>
+  <script>
+        // Configuration and SDK setup
+        const defaultConfig = {
+            hero_title: "Tất cả vì hòa bình – All for Peace",
+            hero_subtitle: "Trải nghiệm chân thực khó khăn thời chiến để thấu hiểu giá trị hòa bình",
+            mission_title: "Vì sao chúng tôi làm điều này?",
+            mission_text: "Chúng tôi tái hiện có kiểm soát để giáo dục lịch sử, khơi gợi lòng biết ơn, xây dựng tinh thần đồng đội, và tôn vinh hòa bình.",
+            contact_email: "info@allforpeace.vn",
+            contact_phone: "+84 xxx xxx xxx",
+            background_color: "#556B2F",
+            surface_color: "#D2B48C",
+            text_color: "#1F2937",
+            primary_action_color: "#B22222",
+            secondary_action_color: "#8B5A2B",
+            font_family: "Inter",
+            font_size: 16
+        };
+
+        let bookingData = [];
+        let recordCount = 0;
+
+        // Data handler for booking submissions
+        const dataHandler = {
+            onDataChanged(data) {
+                bookingData = data;
+                recordCount = data.length;
+                // Update UI if needed - for this landing page, we don't display booking data
+            }
+        };
+
+        // Element SDK setup
+        async function onConfigChange(config) {
+            // Update text content
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+            
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+            
+            const missionTitle = document.getElementById('mission-title');
+            if (missionTitle) missionTitle.textContent = config.mission_title || defaultConfig.mission_title;
+            
+            const missionText = document.getElementById('mission-text');
+            if (missionText) missionText.textContent = config.mission_text || defaultConfig.mission_text;
+            
+            const contactEmail = document.getElementById('contact-email');
+            if (contactEmail) contactEmail.textContent = `Email: ${config.contact_email || defaultConfig.contact_email}`;
+            
+            const contactPhone = document.getElementById('contact-phone');
+            if (contactPhone) contactPhone.textContent = `Hotline: ${config.contact_phone || defaultConfig.contact_phone}`;
+
+            // Apply colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+            // Update CSS custom properties for colors
+            document.documentElement.style.setProperty('--bg-color', backgroundColor);
+            document.documentElement.style.setProperty('--surface-color', surfaceColor);
+            document.documentElement.style.setProperty('--text-color', textColor);
+            document.documentElement.style.setProperty('--primary-action', primaryActionColor);
+            document.documentElement.style.setProperty('--secondary-action', secondaryActionColor);
+
+            // Apply background color to hero section
+            const heroSection = document.querySelector('.hero-bg');
+            if (heroSection) {
+                heroSection.style.background = `linear-gradient(135deg, ${backgroundColor}e6, ${secondaryActionColor}cc), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>')`;
+            }
+
+            // Apply surface color to vintage paper sections
+            const vintageSections = document.querySelectorAll('.vintage-paper');
+            vintageSections.forEach(section => {
+                section.style.background = `linear-gradient(45deg, ${surfaceColor} 0%, #F5DEB3 100%)`;
+            });
+
+            // Apply text color
+            document.body.style.color = textColor;
+
+            // Apply primary action color to buttons
+            const primaryButtons = document.querySelectorAll('button[onclick*="scrollToBooking"], #submitBtn');
+            primaryButtons.forEach(btn => {
+                btn.style.backgroundColor = primaryActionColor;
+                btn.style.borderColor = primaryActionColor;
+            });
+
+            // Apply font family
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseFontStack = 'Arial, sans-serif';
+            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+            // Apply font size scaling
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ surface_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ primary_action_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ secondary_action_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["mission_title", config.mission_title || defaultConfig.mission_title],
+                ["mission_text", config.mission_text || defaultConfig.mission_text],
+                ["contact_email", config.contact_email || defaultConfig.contact_email],
+                ["contact_phone", config.contact_phone || defaultConfig.contact_phone]
+            ]);
+        }
+
+        // Initialize SDKs
+        async function initializeApp() {
+            try {
+                // Initialize Data SDK
+                if (window.dataSdk) {
+                    const initResult = await window.dataSdk.init(dataHandler);
+                    if (!initResult.isOk) {
+                        console.error("Failed to initialize data SDK");
+                    }
+                }
+
+                // Initialize Element SDK
+                if (window.elementSdk) {
+                    await window.elementSdk.init({
+                        defaultConfig,
+                        onConfigChange,
+                        mapToCapabilities,
+                        mapToEditPanelValues
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to initialize app:", error);
+            }
+        }
+
+        // Utility functions
+        function scrollToBooking() {
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToExperiences() {
+            document.getElementById('experiences').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectPackage(packageType) {
+            const packageSelect = document.getElementById('package');
+            if (packageSelect) {
+                packageSelect.value = packageType;
+                scrollToBooking();
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Form submission handler
+        document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Check data limit
+            if (recordCount >= 999) {
+                showToast('Đã đạt giới hạn tối đa 999 đăng ký. Vui lòng liên hệ trực tiếp với chúng tôi.', 'error');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitText.classList.add('hidden');
+            submitSpinner.classList.remove('hidden');
+
+            try {
+                const formData = new FormData(this);
+                const bookingRecord = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    group_type: formData.get('groupType'),
+                    package: formData.get('package'),
+                    date: formData.get('date'),
+                    location: 'Hà Nội', // Default location
+                    adults: parseInt(formData.get('adults')) || 0,
+                    students: parseInt(formData.get('students')) || 0,
+                    teachers: 0, // Default value
+                    special_requirements: formData.get('specialRequirements') || '',
+                    age_confirmed: formData.get('ageConfirmed') === 'on',
+                    health_declared: formData.get('healthDeclared') === 'on',
+                    safety_agreed: formData.get('safetyAgreed') === 'on',
+                    payment_method: 'pending', // Will be determined later
+                    policy_agreed: true, // Implied by form submission
+                    submitted_at: new Date().toISOString()
+                };
+
+                if (window.dataSdk) {
+                    const result = await window.dataSdk.create(bookingRecord);
+                    
+                    if (result.isOk) {
+                        showToast('Đăng ký thành công! Chúng tôi sẽ liên hệ trong vòng 24h.', 'success');
+                        this.reset();
+                    } else {
+                        showToast('Có lỗi xảy ra khi gửi đăng ký. Vui lòng thử lại.', 'error');
+                    }
+                } else {
+                    showToast('Có lỗi xảy ra khi gửi đăng ký. Vui lòng thử lại.', 'error');
+                }
+            } catch (error) {
+                showToast('Có lỗi xảy ra khi gửi đăng ký. Vui lòng thử lại.', 'error');
+            } finally {
+                // Hide loading state
+                submitBtn.disabled = false;
+                submitText.classList.remove('hidden');
+                submitSpinner.classList.add('hidden');
+            }
+        });
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9957a6068078855e',t:'MTc2MTYyNTMwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
