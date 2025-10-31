@@ -951,7 +951,9 @@
                             date: bookingData.date,
                             adults: bookingData.adults,
                             students: bookingData.students,
-                            special_requirements: bookingData.special_requirements
+                            special_requirements: bookingData.special_requirements,
+                            participants: bookingData.participants,
+                            group_type: bookingData.group_type
                         }
                     })
                 });
@@ -1020,7 +1022,8 @@
                     safety_agreed: formData.get('safetyAgreed') === 'on',
                     payment_method: 'pending', // Will be determined later
                     policy_agreed: true, // Implied by form submission
-                    submitted_at: new Date().toISOString()
+                    submitted_at: new Date().toISOString(),
+                    participants: Math.max(0, (parseInt(formData.get('adults')) || 0) + (parseInt(formData.get('students')) || 0))
                 };
 
                 let isSubmitted = false;
