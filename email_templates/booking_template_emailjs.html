@@ -1,0 +1,82 @@
+<!--
+EmailJS HTML template for booking notifications
+Variables available (use in EmailJS template editor as {{variable_name}}):
+- to_email
+- booking_ref
+- name
+- package_type
+- date
+- adults
+- students
+- special_requirements
+
+Paste the content below into an EmailJS HTML template and set the Template ID in your client code.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking Confirmation - All for Peace</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; color: #1f2937; background: #f7f7f7; margin: 0; padding: 0; }
+    .container { max-width: 680px; margin: 24px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 6px 18px rgba(31,41,55,0.08); }
+    .header { background: linear-gradient(90deg,#556B2F,#8B5A2B); color: #fff; padding: 20px; }
+    .header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    .body { padding: 20px; }
+    .muted { color: #6b7280; font-size: 13px; }
+    table.details { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    table.details td { padding: 8px 6px; vertical-align: top; border-bottom: 1px solid #f1f1f1; }
+    table.details td.label { width: 34%; color: #374151; font-weight: 600; }
+    .cta { display: inline-block; margin-top: 18px; padding: 10px 16px; background: #B22222; color: #fff; border-radius: 6px; text-decoration: none; }
+    .footer { padding: 16px; font-size: 12px; color: #9ca3af; text-align: center; background: #fafafa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>All for Peace — Booking Confirmation</h1>
+      <div class="muted">Booking Reference: {{booking_ref}}</div>
+    </div>
+
+    <div class="body">
+      <p>Dear {{name}},</p>
+      <p class="muted">Thank you for booking the <strong>{{package_type}}</strong> experience at All for Peace. Below are your booking details:</p>
+
+      <table class="details" role="presentation">
+        <tr>
+          <td class="label">Package</td>
+          <td>{{package_type}}</td>
+        </tr>
+        <tr>
+          <td class="label">Date</td>
+          <td>{{date}}</td>
+        </tr>
+        <tr>
+          <td class="label">Adults</td>
+          <td>{{adults}}</td>
+        </tr>
+        <tr>
+          <td class="label">Students</td>
+          <td>{{students}}</td>
+        </tr>
+        <tr>
+          <td class="label">Special Requirements</td>
+          <td>{{special_requirements}}</td>
+        </tr>
+      </table>
+
+      <p>If you need assistance or would like to make changes, please reply to this email or call our hotline.</p>
+
+      <a class="cta" href="mailto:{{to_email}}?subject=Booking Confirmation {{booking_ref}}">Contact Support</a>
+
+      <p style="margin-top:18px;" class="muted">Note: This is an automated email. Please do not modify the provided information without official confirmation from All for Peace.</p>
+    </div>
+
+    <div class="footer">
+      © All for Peace — Experience history to understand the value of peace
+    </div>
+  </div>
+</body>
+</html>
