@@ -4,21 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All for Peace - Experience Peace Through History</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <script src="/_sdk/data_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+        :root{
+            /* Design tokens: colors */
+            --olive-900: #0F1A13; /* deep field green */
+            --olive-700: #1E2A22;
+            --olive-500: #324437;
+            --brown-700: #5B3E2B;
+            --tan: #D9B887;
+            --steel-700: #2A2F36;
+            --steel-400: #6C7684;
+            --parchment-100: #F6F1E6;
+            --parchment-200: #EDE6D9;
+            --sunrise-500: #D9A441;
+            --sunrise-600: #C28C2E;
+            --crimson-500: #B33A3A;
+            --crimson-600: #912E2E;
+            --ink-900: #0E1013;
+            --ink-700: #2A2E33;
+            --mist-300: #D9DDE3;
+            --success-500: #3C8C5A;
+
+            /* Gradients */
+            --hero-gradient: radial-gradient(1200px 800px at 70% 80%, rgba(217,164,65,0.18) 0%, rgba(15,26,19,0) 55%), linear-gradient(180deg, #0F1A13 0%, #1E2A22 70%);
+            --cta-gradient: linear-gradient(180deg, #B33A3A 0%, #912E2E 100%);
+            --gold-gradient: linear-gradient(180deg, #D9A441 0%, #C28C2E 100%);
+
+            /* Shadows & rings */
+            --soft-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            --ring: 0 0 0 3px rgba(217,164,65,0.3);
+                /* navigation gradient token for cohesive header
+                    - stronger, professional gradient that separates the header
+                    - blends cool steel with a deep field tone and a subtle warm edge */
+                --nav-gradient: linear-gradient(90deg, var(--steel-700) 0%, var(--olive-900) 55%, rgba(217,164,65,0.06) 100%);
+
+            /* Radii */
+            --r-sm: 8px; --r-md: 12px; --r-lg: 18px;
+
+            /* Spacing scale (px) */
+            --space-1: 4; --space-2: 8; --space-3: 12; --space-4: 16; --space-5: 24; --space-6: 32; --space-7: 48; --space-8: 72;
+        }
+
         body {
             box-sizing: border-box;
+            background: var(--hero-gradient);
+            color: var(--ink-700);
+            font-family: Inter, Arial, sans-serif;
+            -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+            line-height:1.45;
         }
-        
+
+        /* Heading typography */
+        h1,h2,h3,h4,h5{ font-family: Cinzel, Georgia, serif; color:var(--ink-900); }
+        h1{ font-weight:800; font-size:3.4rem; line-height:1.02; letter-spacing:-0.02em; }
+        @media(max-width:768px){ h1{ font-size:2.4rem; } }
+
+        /* Hero section: war, peace, history */
         .hero-bg {
-            background: linear-gradient(135deg, rgba(85, 107, 47, 0.9), rgba(139, 90, 43, 0.8)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            background-size: cover, 200px 200px;
+            background: var(--hero-gradient), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="noise" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%23ffffff" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23noise)"/></svg>');
+            background-size: cover, 1200px 800px;
+            background-blend-mode: overlay;
+            color: var(--parchment-100);
         }
-        
+
+        /* Film grain overlay: history effect */
         .film-grain::before {
             content: '';
             position: absolute;
@@ -26,25 +79,72 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23000000" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23000000" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="%23000000" opacity="0.1"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23a67c52" opacity="0.13"/><circle cx="75" cy="75" r="1" fill="%23a67c52" opacity="0.13"/><circle cx="50" cy="10" r="1" fill="%23a67c52" opacity="0.13"/></svg>');
             background-size: 50px 50px;
             pointer-events: none;
         }
-        
-        
+
+        /* Vintage paper: education, experience */
         .vintage-paper {
-            background: linear-gradient(45deg, #D2B48C 0%, #F5DEB3 100%);
-            box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.1);
+            background: linear-gradient(45deg, var(--parchment-100) 0%, var(--parchment-200) 100%);
+            box-shadow: inset 0 -10px 30px rgba(15,20,18,0.04);
+            border:1px solid var(--mist-300);
+            color:var(--ink-700);
         }
-        
+
+        /* Military border for experience cards */
+        .military-border {
+            border: 2px dashed #a67c52;
+            box-shadow: 0 2px 12px 0 rgba(43, 39, 29, 0.07);
+        }
+
+        /* Loading spinner: peace color */
         .loading-spinner {
-            border: 3px solid #D2B48C;
-            border-top: 3px solid #556B2F;
+            border: 3px solid var(--sunrise-500);
+            border-top: 3px solid var(--olive-900);
             border-radius: 50%;
             width: 20px;
             height: 20px;
             animation: spin 1s linear infinite;
         }
+
+        /* Utility color classes (used to replace inline styles) */
+        .text-olive { color: var(--olive-700) !important; }
+    .text-tan { color: var(--tan) !important; }
+    .text-brown { color: var(--brown-700) !important; }
+
+     /* Make the main navigation/task bar opaque and readable
+         Use a cool/neutral steel tone so it reads as a distinct bar
+         separate from the warm/olive hero background */
+     .main-nav {
+         background: var(--nav-gradient);
+         backdrop-filter: none;
+         border-bottom: 2px solid rgba(217,164,65,0.12);
+         box-shadow: 0 10px 30px rgba(6,8,10,0.5);
+         padding: 6px 0;
+         --nav-link-color: var(--parchment-100);
+     }
+     /* make nav links more visible and tappable */
+     .main-nav .nav-links-animated a,
+     .main-nav a { color: var(--nav-link-color) !important; transition: color .15s ease, box-shadow .15s ease; padding: 8px 10px; font-weight:700; letter-spacing:0.2px; }
+     .main-nav a:hover { color: var(--sunrise-600) !important; }
+     /* stronger focus state on nav items for keyboard users */
+     .main-nav a:focus { outline: none; box-shadow: 0 0 0 4px rgba(210,160,60,0.18); border-radius: 6px; }
+     /* brand/logo color adjustments when header is dark */
+     .main-nav .nav-logo-animated span { color: var(--parchment-100); }
+        .text-parchment { color: var(--parchment-100) !important; }
+
+    /* Buttons: solid, outline, pill */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:var(--r-md); font-weight:600; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, filter .12s ease; text-decoration:none; }
+    .btn:focus{ box-shadow: var(--ring); outline:none; }
+    .btn-primary { background: var(--gold-gradient); color:var(--ink-900); border:1px solid transparent; box-shadow: var(--soft-shadow); }
+    .btn-primary:hover{ transform: translateY(-1px); filter:brightness(1.06); }
+    .btn-secondary { background: var(--parchment-100); color: var(--ink-900); border:1px solid rgba(15,26,19,0.06); box-shadow: none; }
+    .btn-outline{ background:transparent; color:var(--parchment-100); border:2px solid rgba(255,255,255,0.12); }
+    .btn-outline:hover{ background: rgba(255,255,255,0.03); transform: translateY(-1px); }
+    .btn-pill{ background:var(--gold-gradient); color:var(--ink-900); border-radius:9999px; box-shadow: var(--soft-shadow); }
+
+    .popular-badge { background: var(--crimson-500); color: white; padding: .25rem .75rem; border-radius: 9999px; font-size: .75rem; font-weight:700; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -241,51 +341,77 @@
         }
         
         .toast.success {
-            background-color: #556B2F;
+            background-color: var(--olive-900);
         }
-        
+
         .toast.error {
-            background-color: #B22222;
+            background-color: var(--crimson-600);
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
+    <script>
+        // fallback SVG data URIs for missing images
+        (function(){
+            try{
+                var logoSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="240" height="48" viewBox="0 0 240 48"><rect fill="%230F1A13" width="100%" height="100%"/><text x="12" y="34" font-family="Cinzel, Georgia, serif" font-size="20" fill="%23F6F1E6">All for Peace</text></svg>';
+                window.logoFallback = 'data:image/svg+xml;utf8,' + encodeURIComponent(logoSVG);
+
+                var heroSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#D9A441" stop-opacity="0.05"/><stop offset="70%" stop-color="#0F1A13" stop-opacity="0.02"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><g fill="#1E2A22" opacity="0.08"><circle cx="200" cy="200" r="80"/><circle cx="1000" cy="600" r="120"/></g></svg>';
+                window.heroFallback = 'data:image/svg+xml;utf8,' + encodeURIComponent(heroSVG);
+            }catch(e){ window.logoFallback=''; window.heroFallback=''; }
+        })();
+    </script>
  </head>
  <body class="font-inter text-gray-900"><!-- Navigation -->
-  <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm nav-animated">
+    <nav class="fixed top-0 w-full main-nav z-50 shadow-sm nav-animated" aria-label="Primary navigation">
    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-     <div class="flex items-center space-x-2 nav-logo-animated">
-      <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center"><span class="text-white font-bold text-sm">✌</span>
-      </div><span class="font-merriweather font-bold text-xl" style="color: #556B2F;">All for Peace</span>
+    <div class="flex items-center space-x-2 nav-logo-animated">
+    <img src="images/logo.png" alt="All for Peace logo" class="h-10 w-auto" onerror="this.onerror=null; this.src=window.logoFallback;">
+    <span class="font-merriweather font-bold text-xl text-white">All for Peace</span>
      </div>
     <div class="hidden md:flex space-x-8 nav-links-animated"><a href="#about" class="text-gray-700 hover:text-yellow-700 transition-colors">About</a> <a href="#experiences" class="text-gray-700 hover:text-yellow-700 transition-colors">Experiences</a> <a href="#safety" class="text-gray-700 hover:text-yellow-700 transition-colors">Safety</a> <a href="#booking" class="text-gray-700 hover:text-yellow-700 transition-colors">Booking</a>
      </div>
     </div>
    </div>
-  </nav><!-- Hero Section -->
-  <section class="hero-bg min-h-screen flex items-center justify-center text-white relative">
-   <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-    <h1 id="hero-title" class="font-merriweather font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight hero-title-animated">All for Peace<br><span class="text-yellow-300">All for Peace</span></h1>
-    <p id="hero-subtitle" class="text-xl md:text-2xl mb-8 font-light leading-relaxed hero-subtitle-animated" style="color: #D2B48C;">Experience a realistic simulation of wartime hardships to understand the value of peace — Experience a realistic simulation of wartime hardships to understand the value of peace</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center hero-buttons-animated"><button type="button" onclick="scrollToBooking()" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg"> Booking Form — Booking Form </button> <button type="button" onclick="scrollToExperiences()" class="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-lg transition-all"> View Schedule &amp; Prices — View Schedule &amp; Prices </button> <button type="button" onclick="scrollToBooking()" class="px-8 py-4 bg-yellow-700 hover:bg-yellow-800 text-white font-semibold rounded-lg transition-all"> For Schools — For Schools </button>
-    </div>
-   </div>
+</nav><!-- Hero Section -->
+<section class="hero-bg min-h-screen flex items-center justify-center text-white relative" style="background: rgba(82, 88, 63, 1);">
+ <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+    <h1 id="hero-title" class="font-merriweather font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight hero-title-animated" role="heading" aria-level="1"><span class="text-parchment">All for Peace</span></h1>
+            <p id="hero-subtitle" class="text-xl md:text-2xl mb-8 font-light leading-relaxed hero-subtitle-animated text-parchment" style="color:var(--parchment-100);opacity:.94;">Experience a realistic simulation of wartime hardships to understand the value of peace — Experience a realistic simulation of wartime hardships to understand the value of peace</p>
+    <!-- decorative background image (presentation only) -->
+    <img src="images\Designer (4).png" alt="" role="presentation" loading="lazy" class="hero-decor" style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;pointer-events:none;filter:grayscale(.01) contrast(.9)" onerror="this.onerror=null; this.src=window.heroFallback;">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center hero-buttons-animated">
+                    <button type="button" onclick="scrollToExperiences()" class="btn btn-primary">View Schedule &amp; Prices</button>
+                    <button type="button" onclick="scrollToBooking()" class="btn btn-outline">Booking Form</button>
+                    <button type="button" onclick="scrollToBooking()" class="btn btn-primary">For Schools</button>
+            </div>
+ </div>
+ 
   </section><!-- Mission Section -->
-  <section id="about" class="py-20 vintage-paper relative film-grain">
+  <section id="about" class="py-20" style="background-color: rgba(142, 136, 104, 1);">
    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 id="mission-title" class="font-merriweather font-bold text-3xl md:text-4xl mb-8 scroll-reveal" style="color: #556B2F;">Our Mission</h2>
+    <h2 id="mission-title" class="font-merriweather font-bold text-3xl md:text-4xl mb-8 scroll-reveal text-olive">Our Mission</h2>
         <p id="mission-text" class="text-lg md:text-xl leading-relaxed text-gray-800 max-w-3xl mx-auto scroll-reveal">We recreate controlled historical experiences to educate about the past, foster gratitude, build teamwork, and honor the value of peace.</p>
-   </div>
-  </section><!-- Experience Packages -->
-  <section id="experiences" class="py-20 bg-gray-50">
+<!-- decorative background image (presentation only) -->
+ </div>
+        </section>
+        
+<!-- Experience Packages -->
+
+<section id="experiences" class="py-20" style="background-color: rgba(190, 171, 138, 1);">
    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-16 scroll-reveal" style="color: #556B2F;">Experience Packages</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- EASY Package -->
-     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow scroll-reveal-scale stagger-delay-1">
-      <div class="text-center mb-4">
-    <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">EASY</h3>
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-16 scroll-reveal text-olive">Experience Packages</h2>
+    <!-- Modified to use 2 columns centered grid -->
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+     <div class="military-border bg-white/80 rounded-lg p-6 hover:shadow-xl transition-shadow scroll-reveal-scale stagger-delay-1">
+       <div class="absolute -top-3 -right-3 popular-badge">
+     COMING SOON
+    </div>
+        <div class="text-center mb-4">
+    <h3 class="font-merriweather font-bold text-xl mb-2 text-brown">EASY</h3>
     <p class="text-sm font-mono text-gray-600">(Educational)</p>
-    <p class="text-lg font-semibold" style="color: #556B2F;">3-4 hours</p>
+    <p class="text-lg font-semibold text-olive">3-4 hours</p>
     <p class="text-sm text-gray-600">Students</p>
       </div>
     <ul class="text-sm space-y-2 mb-6">
@@ -293,30 +419,16 @@
     <li>• Wear historical uniforms</li>
     <li>• Learn wartime cooking techniques</li>
     <li>• Watch tactical demonstrations</li>
-      </ul><button onclick="selectPackage('EASY')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Select package </button>
-     </div><!-- NORMAL Package -->
-     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow scroll-reveal-scale stagger-delay-2">
-      <div class="text-center mb-4">
-       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">NORMAL</h3>
-    <p class="text-sm font-mono text-gray-600">(Logistics)</p>
-    <p class="text-lg font-semibold" style="color: #556B2F;">4-6 hours</p>
-       <p class="text-sm text-gray-600">18+</p>
-      </div>
-    <ul class="text-sm space-y-2 mb-6">
-     <li>• Supply transport exercises</li>
-     <li>• Rear-area operations</li>
-     <li>• Ambush avoidance scenarios</li>
-     <li>• Wartime cooking</li>
-    </ul><button onclick="selectPackage('NORMAL')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Select package </button>
+    </ul><button onclick="selectPackage('EASY')" class="w-full py-2 btn bg-white">Select package</button>
      </div><!-- HARD Package -->
-     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow relative scroll-reveal-scale stagger-delay-3">
-    <div class="absolute -top-3 -right-3 bg-red-700 text-white px-3 py-1 rounded-full text-xs font-bold">
-     POPULAR — POPULAR
+     <div class="military-border bg-white/80 rounded-lg p-6 hover:shadow-xl transition-shadow relative scroll-reveal-scale stagger-delay-3">
+    <div class="absolute -top-3 -right-3 popular-badge">
+     POPULAR
     </div>
       <div class="text-center mb-4">
-       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">HARD</h3>
-    <p class="text-sm font-mono text-gray-600">(Combat Simulation)</p>
-    <p class="text-lg font-semibold" style="color: #556B2F;">6-8 hours</p>
+         <h3 class="font-merriweather font-bold text-xl mb-2 text-brown">HARD</h3>
+     <p class="text-sm font-mono text-gray-600">(Combat Simulation)</p>
+     <p class="text-lg font-semibold text-olive">6-8 hours</p>
        <p class="text-sm text-gray-600">18+</p>
       </div>
     <ul class="text-sm space-y-2 mb-6">
@@ -324,31 +436,18 @@
      <li>• Team tactics</li>
      <li>• Simulated medical evacuation</li>
      <li>• Sound and smoke effects</li>
-    </ul><button onclick="selectPackage('HARD')" class="w-full py-2 bg-red-700 hover:bg-red-800 text-white rounded transition-colors"> Select package </button>
-     </div><!-- 3 Days Package -->
-     <div class="military-border bg-white rounded-lg p-6 hover:shadow-xl transition-shadow scroll-reveal-scale stagger-delay-4">
-      <div class="text-center mb-4">
-       <h3 class="font-merriweather font-bold text-xl mb-2" style="color: #8B5A2B;">PREMIUM</h3>
-    <p class="text-sm font-mono text-gray-600">3 days 2 nights</p>
-    <p class="text-lg font-semibold" style="color: #556B2F;">Comprehensive</p>
-       <p class="text-sm text-gray-600">18+</p>
-      </div>
-    <ul class="text-sm space-y-2 mb-6">
-     <li>• Live like a veteran</li>
-     <li>• Learn history &amp; discipline</li>
-     <li>• Day and night missions</li>
-     <li>• Evening historical storytelling</li>
-    </ul><button onclick="selectPackage('3N2D')" class="w-full py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded transition-colors"> Select package </button>
+    </ul><button onclick="selectPackage('HARD')" class="w-full py-2 btn btn-primary">Select package</button>
+     
      </div>
     </div>
    </div>
   </section><!-- Sample Schedule -->
   <section class="py-20 vintage-paper">
    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal" style="color: #556B2F;">Sample Schedule (HARD - 1 day)</h2>
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal text-olive">Sample Schedule (HARD - 1 day)</h2>
     <div class="space-y-6">
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-left stagger-delay-1">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        08:30
       </div>
       <div>
@@ -357,7 +456,7 @@
       </div>
      </div>
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-right stagger-delay-2">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        09:00
       </div>
       <div>
@@ -366,7 +465,7 @@
       </div>
      </div>
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-left stagger-delay-3">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        10:00
       </div>
       <div>
@@ -375,7 +474,7 @@
       </div>
      </div>
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-right stagger-delay-4">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        12:00
       </div>
       <div>
@@ -384,7 +483,7 @@
       </div>
      </div>
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-left">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        13:30
       </div>
       <div>
@@ -393,7 +492,7 @@
       </div>
      </div>
      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm scroll-reveal-right">
-      <div class="font-mono font-bold text-lg" style="color: #8B5A2B;">
+    <div class="font-mono font-bold text-lg text-brown">
        15:30
       </div>
       <div>
@@ -406,7 +505,7 @@
   </section><!-- Safety Section -->
   <section id="safety" class="py-20 bg-gray-50">
    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal" style="color: #556B2F;">Safety &amp; Responsibility</h2>
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal text-olive">Safety &amp; Responsibility</h2>
     <div class="grid md:grid-cols-3 gap-8">
      <div class="text-center p-6 bg-white rounded-lg shadow-sm scroll-reveal-scale stagger-delay-1">
       <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center"><span class="text-2xl">🔫</span>
@@ -431,33 +530,33 @@
   </section><!-- Booking Form -->
   <section id="booking" class="py-20 vintage-paper ">
    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal" style="color: #556B2F;">Book Experience</h2>
+    <h2 class="font-merriweather font-bold text-3xl md:text-4xl text-center mb-12 scroll-reveal text-olive">Book Experience</h2>
     <form id="bookingForm" class="bg-white rounded-lg shadow-lg p-8 military-border scroll-reveal-scale">
      <div class="grid md:grid-cols-2 gap-6"><!-- Contact Info -->
-      <div><label for="name" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Full Name *</label> <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+            <div><label for="name" class="block text-sm font-semibold mb-2 text-olive">Full Name *</label> <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
-      <div><label for="email" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Email *</label> <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+            <div><label for="email" class="block text-sm font-semibold mb-2 text-olive">Email *</label> <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
-    <div><label for="phone" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Phone * — Phone</label> <input type="tel" id="phone" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <div><label for="phone" class="block text-sm font-semibold mb-2 text-olive">Phone * — Phone</label> <input type="tel" id="phone" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
       </div>
-    <div><label for="groupType" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Group Type * — Group Type</label> <select id="groupType" name="groupType" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Select group type — Select group type</option> <option value="individual">Individual — Individual</option> <option value="school">School — School</option> <option value="corporate">Corporate — Corporate</option> </select>
+        <div><label for="groupType" class="block text-sm font-semibold mb-2 text-olive">Group Type * — Group Type</label> <select id="groupType" name="groupType" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Select group type — Select group type</option> <option value="individual">Individual — Individual</option> <option value="school">School — School</option> <option value="corporate">Corporate — Corporate</option> </select>
      </div>
-    <div><label for="package" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Experience Package * — Experience Package</label> <select id="package" name="package" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Select a package — Select a package</option> <option value="EASY">EASY (Educational) - 3-4h — EASY (Educational) - 3-4h</option> <option value="NORMAL">NORMAL (Logistics) - 4-6h — NORMAL (Logistics) - 4-6h</option> <option value="HARD">HARD (Combat Simulation) - 6-8h — HARD (Combat Simulation) - 6-8h</option> <option value="3N2D">PREMIUM (3 days 2 nights) — PREMIUM (3 days 2 nights)</option> </select>
+        <div><label for="package" class="block text-sm font-semibold mb-2 text-olive">Experience Package * — Experience Package</label> <select id="package" name="package" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"> <option value="">Select a package — Select a package</option> <option value="EASY">EASY (Educational) - 3-4h — EASY (Educational) - 3-4h</option> <option value="NORMAL">NORMAL (Logistics) - 4-6h — NORMAL (Logistics) - 4-6h</option> <option value="HARD">HARD (Combat Simulation) - 6-8h — HARD (Combat Simulation) - 6-8h</option> <option value="3N2D">PREMIUM (3 days 2 nights) — PREMIUM (3 days 2 nights)</option> </select>
     </div>
-    <div><label for="date" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Preferred Date * — Preferred Date</label> <input type="date" id="date" name="date" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <div><label for="date" class="block text-sm font-semibold mb-2 text-olive">Preferred Date * — Preferred Date</label> <input type="date" id="date" name="date" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
-    <div><label for="adults" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Adults — Adults</label> <input type="number" id="adults" name="adults" min="0" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <div><label for="adults" class="block text-sm font-semibold mb-2 text-olive">Adults — Adults</label> <input type="number" id="adults" name="adults" min="0" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
-    <div><label for="students" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Students — Students</label> <input type="number" id="students" name="students" min="0" value="0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <div><label for="students" class="block text-sm font-semibold mb-2 text-olive">Students — Students</label> <input type="number" id="students" name="students" min="0" value="0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
       </div>
      </div>
-     <div class="mt-6"><label for="specialRequirements" class="block text-sm font-semibold mb-2" style="color: #556B2F;">Special Requirements</label> <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Dietary needs, medical assistance, preferred language..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"></textarea>
+    <div class="mt-6"><label for="specialRequirements" class="block text-sm font-semibold mb-2 text-olive">Special Requirements</label> <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Dietary needs, medical assistance, preferred language..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"></textarea>
      </div>
      <div class="mt-6 space-y-4"><label class="flex items-start space-x-3"> <input type="checkbox" id="ageConfirmed" name="ageConfirmed" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">I confirm I meet the age requirement (18+ for NORMAL/HARD/PREMIUM packages) *</span> </label> <label class="flex items-start space-x-3"> <input type="checkbox" id="healthDeclared" name="healthDeclared" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">I declare I am in good health with no cardiovascular or respiratory issues *</span> </label> <label class="flex items-start space-x-3"> <input type="checkbox" id="safetyAgreed" name="safetyAgreed" required class="mt-1 w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"> <span class="text-sm text-gray-700">I have read and agree to the safety regulations *</span> </label>
      </div>
-     <div class="mt-8 text-center"><button type="submit" id="submitBtn" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"> <span id="submitText">Submit Booking</span>
-       <div id="submitSpinner" class="loading-spinner mx-auto hidden"></div></button>
+         <div class="mt-8 text-center"><button type="submit" id="submitBtn" class="px-8 py-4 btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"> <span id="submitText">Submit Booking</span>
+             <div id="submitSpinner" class="loading-spinner mx-auto hidden"></div></button>
     <p class="text-sm text-gray-600 mt-4">We will contact you within 24 hours to confirm and guide you on the payment process</p>
      </div>
     </form>
@@ -468,35 +567,34 @@
     <div class="grid md:grid-cols-4 gap-8">
      <div>
       <div class="flex items-center space-x-2 mb-4">
-       <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center"><span class="text-white font-bold text-sm">✌</span>
+       <img src="images/logo.png" alt="All for Peace logo" class="h-10 w-auto" onerror="this.onerror=null; this.src=window.logoFallback;"
        </div><span class="font-merriweather font-bold text-xl">All for Peace</span>
       </div>
     <p class="text-gray-400 text-sm">Experience history to understand the value of peace</p>
      </div>
     <div>
-     <h4 class="font-semibold mb-4">Contact — Contact</h4>
+    <h4 class="font-semibold mb-4 text-white">Contact</h4>
      <div class="space-y-2 text-sm text-gray-400">
       <p id="contact-email">Email: info@allforpeace.vn</p>
       <p id="contact-phone">Hotline: +84 031 12 2025 </p>
-      <p>Address: Hanoi, Vietnam — Address: Ho Chi Minh City, Vietnam</p>
+      <p>Address: Ho Chi Minh City, Vietnam</p>
      </div>
     </div>
     <div>
-     <h4 class="font-semibold mb-4">Experience — Experience</h4>
+     <h4 class="font-semibold mb-4 text-white">Experience</h4>
      <div class="space-y-2 text-sm text-gray-400">
-      <p>EASY - Educational — EASY - Educational</p>
-      <p>NORMAL - Logistics — NORMAL - Logistics</p>
-      <p>HARD - Combat — HARD - Combat</p>
-      <p>PREMIUM - 3D2N — PREMIUM - 3D2N</p>
+      <p>EASY - Educational</p>
+      <p>HARD - Combat</p>
+      
      </div>
     </div>
          <div>
-            <h4 class="font-semibold mb-4">Policies — Policies</h4>
+            <h4 class="font-semibold mb-4 text-white">Policies</h4>
             <div class="space-y-2 text-sm text-gray-400">
-        <p>Terms of Use — Terms of Use</p>
-        <p>Privacy Policy — Privacy Policy</p>
-        <p>Refund Policy — Refund Policy</p>
-             <p>Safety Policy — Safety Policy</p>
+        <p>Terms of Use</p>
+        <p>Privacy Policy</p>
+        <p>Refund Policy</p>
+             <p>Safety Policy</p>
             </div>
          </div>
     </div>
@@ -514,13 +612,13 @@
             mission_text: "We recreate controlled historical experiences to educate about the past, foster gratitude, build teamwork, and honor the value of peace.",
             contact_email: "info@allforpeace.vn",
             contact_phone: "+84 xxx xxx xxx",
-            background_color: "#556B2F",
-            surface_color: "#D2B48C",
-            text_color: "#1F2937",
-            primary_action_color: "#B22222",
-            secondary_action_color: "#8B5A2B",
-            font_family: "Inter",
-            font_size: 16
+            background_color: "#232d1a", // deep olive (war/peace/history)
+            surface_color: "#f8f4e3",    // parchment (education/experience)
+            text_color: "#3a2f1a",      // rich brown (history)
+            primary_action_color: "#800020", // burgundy (war accent)
+            secondary_action_color: "#c2b280", // sand/gold (experience)
+            font_family: "Merriweather",
+            font_size: 17
         };
 
         let bookingData = [];
@@ -563,12 +661,19 @@
             const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
             const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
 
-            // Update CSS custom properties for colors
+            // Update CSS custom properties for colors (legacy keys) and brand tokens
             document.documentElement.style.setProperty('--bg-color', backgroundColor);
             document.documentElement.style.setProperty('--surface-color', surfaceColor);
             document.documentElement.style.setProperty('--text-color', textColor);
             document.documentElement.style.setProperty('--primary-action', primaryActionColor);
             document.documentElement.style.setProperty('--secondary-action', secondaryActionColor);
+
+            // Map incoming config to our design tokens so CSS uses the dynamic values
+            document.documentElement.style.setProperty('--olive-900', backgroundColor);
+            document.documentElement.style.setProperty('--parchment-100', surfaceColor);
+            document.documentElement.style.setProperty('--ink-900', textColor);
+            document.documentElement.style.setProperty('--crimson-600', primaryActionColor);
+            document.documentElement.style.setProperty('--sunrise-500', secondaryActionColor);
 
             // Apply background color to hero section
             const heroSection = document.querySelector('.hero-bg');
