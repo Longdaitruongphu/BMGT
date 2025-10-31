@@ -576,9 +576,7 @@
               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
               <option value="">Select a package</option>
               <option value="EASY">EASY (Educational) - 3–4h</option>
-              <option value="NORMAL">NORMAL (Logistics) - 4–6h</option>
               <option value="HARD">HARD (Combat Simulation) - 6–8h</option>
-              <option value="3N2D">PREMIUM (3 days 2 nights)</option>
             </select>
           </div>
 
@@ -635,6 +633,7 @@
           <button type="submit" id="submitBtn"
             class="px-8 py-4 rounded-xl bg-yellow-700 text-white font-semibold hover:bg-yellow-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
             <span id="submitText">Submit Booking</span>
+            <div id="submitSpinner" class="hidden loading-spinner mx-auto"></div>
           </button>
           <p class="text-sm text-gray-600 mt-4">
             We will contact you within 24 hours to confirm and guide you on the payment process.
@@ -956,8 +955,12 @@
                         }
                     })
                 });
-                if (!response.ok) console.warn('EmailJS returned non-ok status', response.status);
+                if (!response.ok) {
+                    console.warn('EmailJS returned non-ok status', response.status);
+                    showToast('Warning: Email notification failed to send.', 'warning');
+                }
                 return response.ok;
+                
             } catch (err) {
                 console.warn('Failed to send email notification:', err);
                 return false;
@@ -966,16 +969,17 @@
 
         // Helper function to store booking data locally
         function storeBookingLocally(bookingRecord) {
-            try {
-                const storedBookings = JSON.parse(localStorage.getItem('bmgt_bookings') || '[]');
-                storedBookings.push(bookingRecord);
-                localStorage.setItem('bmgt_bookings', JSON.stringify(storedBookings));
-                return true;
-            } catch (err) {
-                console.error('Failed to store booking locally:', err);
-                return false;
-            }
-        }
+    try {
+        const storedBookings = JSON.parse(localStorage.getItem('bmgt_bookings') || '[]');
+        storedBookings.push(bookingRecord);
+        localStorage.setItem('bmgt_bookings', JSON.stringify(storedBookings));
+        return true;
+    } catch (err) {
+        console.error('Failed to store booking locally:', err);
+        showToast('⚠️ Local storage full or unavailable. Your booking is not saved locally.', 'error');
+        return false;
+    }
+}
 
         // Form submission handler
         document.getElementById('bookingForm').addEventListener('submit', async function(e) {
@@ -1099,8 +1103,10 @@
 
         // Initialize app when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-            initializeApp();
-            initScrollReveal();
+            document.getElementById('bookingForm')?.addEventListener('submit', async function(e) {
+                initializeApp();
+                initScrollReveal();
+            });
         });
     </script>
 </body>
